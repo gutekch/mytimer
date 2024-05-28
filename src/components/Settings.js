@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import Timer from './Timer'
 
-
-export const Settings = ( {runTimer,setRunTimer}) => {
-  const [showsettings, setShowSettings] = useState(true);
+export const Settings = ({ runTimer, setRunTimer }) => {
+  const [showSettings, setShowSettings] = useState(true);
   const [reps, setReps] = useState();
   const [durr, setDurr] = useState();
   const [rest, setRest] = useState();
@@ -11,15 +10,20 @@ export const Settings = ( {runTimer,setRunTimer}) => {
     typeof reps === "number" &&
     typeof durr === "number" &&
     typeof rest === "number";
-  // Checks if the number of reps, duration of rep and rest are all chosen. If they are, button changes to green so that the user knows they are ready to go.
-  function handleClick(){
-    if (areAllNumbers){setRunTimer(true);setShowSettings(false)} else{alert('PLEASE CHOOSE NUM OF REPS, DURATION OF REP AND REST IN BETWEEN FIRST!')};
+
+  function handleClick() {
+    if (areAllNumbers) {
+      setRunTimer(true);
+      setShowSettings(false);
+    } else {
+      alert('PLEASE CHOOSE NUM OF REPS, DURATION OF REP AND REST IN BETWEEN FIRST!');
+    }
   }
-    console.log(runTimer)
+
   return (
     <>
-      {showsettings && (
-        <div>
+      {showSettings && (
+        <div className="settings">
           <h3>NUM OF REPS</h3>
           <form>
             <input
@@ -41,7 +45,7 @@ export const Settings = ( {runTimer,setRunTimer}) => {
               onChange={(e) => setRest(parseFloat(e.target.value))}
             />
           </form>
-          <button
+          <button className="settings-button"
             style={{ backgroundColor: areAllNumbers ? "green" : "yellow" }}
             onClick={handleClick}
           >
@@ -49,7 +53,7 @@ export const Settings = ( {runTimer,setRunTimer}) => {
           </button>
         </div>
       )}
-      <Timer reps={reps} durr={durr} rest={rest} handleClick={handleClick}/>
+      {runTimer && <Timer reps={reps} durr={durr} rest={rest} />}
     </>
   );
 };
